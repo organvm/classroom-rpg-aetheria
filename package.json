@@ -15,7 +15,7 @@
         "test:coverage": "vitest --coverage"
     },
     "dependencies": {
-        "firebase": "^10.14.0",
+        "firebase": "^12.8.0",
         "@github/spark": "^0.44.15",
         "@heroicons/react": "^2.2.0",
         "@hookform/resolvers": "^5.2.2",
