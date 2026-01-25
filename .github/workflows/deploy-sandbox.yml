@@ -73,7 +73,7 @@ jobs:
           echo '{"sandboxMode": true, "version": "1.0.0", "buildDate": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"}' > dist/sandbox-info.json
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: sandbox-build
           path: dist/
