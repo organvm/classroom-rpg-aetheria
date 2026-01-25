@@ -8,13 +8,21 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Slider } from '@/components/ui/slider'
-import { CheckCircle, XCircle, PaperPlaneRight, Sparkle } from '@phosphor-icons/react'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription
+} from '@/components/ui/sheet'
+import { CheckCircle, XCircle, PaperPlaneRight, Sparkle, ChatText } from '@phosphor-icons/react'
 import type { Submission, Quest, Theme } from '@/lib/types'
 import type { Rubric } from './RubricManager'
 import { THEME_CONFIGS } from '@/lib/types'
 import { sanitizeLLMInput } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
+import { FeedbackSnippetBrowser } from './educator/FeedbackSnippetBrowser'
 
 interface GradingInterfaceProps {
   submission: Submission
@@ -39,8 +47,20 @@ export function GradingInterface({
   const [manualScore, setManualScore] = useState(submission.score || 0)
   const [rubricScores, setRubricScores] = useState<Record<string, number>>({})
   const [isGenerating, setIsGenerating] = useState(false)
-  
+  const [snippetSidebarOpen, setSnippetSidebarOpen] = useState(false)
+
   const themeConfig = THEME_CONFIGS[theme]
+
+  const handleSnippetInsert = (content: string) => {
+    // Append snippet to feedback, adding newline if feedback already has content
+    setFeedback(prev => {
+      if (prev.trim()) {
+        return prev + '\n\n' + content
+      }
+      return content
+    })
+    toast.success('Snippet inserted')
+  }
 
   const calculateRubricTotal = () => {
     if (!rubric) return 0
@@ -184,16 +204,27 @@ Provide constructive feedback in 2-3 sentences as the ${themeConfig.oracleLabel}
           <Card className="glass-panel p-4 space-y-3">
             <div className="flex items-center justify-between">
               <Label>Feedback</Label>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleGenerateFeedback}
-                disabled={isGenerating}
-                className="gap-2"
-              >
-                <Sparkle size={16} weight="fill" />
-                {isGenerating ? 'Generating...' : 'AI Generate'}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSnippetSidebarOpen(true)}
+                  className="gap-2"
+                >
+                  <ChatText size={16} weight="fill" />
+                  Browse Snippets
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGenerateFeedback}
+                  disabled={isGenerating}
+                  className="gap-2"
+                >
+                  <Sparkle size={16} weight="fill" />
+                  {isGenerating ? 'Generating...' : 'AI Generate'}
+                </Button>
+              </div>
             </div>
             <Textarea
               value={feedback}
@@ -203,6 +234,21 @@ Provide constructive feedback in 2-3 sentences as the ${themeConfig.oracleLabel}
               rows={5}
             />
           </Card>
+
+          {/* Feedback Snippet Sidebar */}
+          <Sheet open={snippetSidebarOpen} onOpenChange={setSnippetSidebarOpen}>
+            <SheetContent side="right" className="w-[360px] sm:w-[420px]">
+              <SheetHeader>
+                <SheetTitle>Feedback Snippets</SheetTitle>
+                <SheetDescription>
+                  Click a snippet to insert it into your feedback
+                </SheetDescription>
+              </SheetHeader>
+              <div className="mt-6 h-[calc(100vh-140px)]">
+                <FeedbackSnippetBrowser onInsert={handleSnippetInsert} />
+              </div>
+            </SheetContent>
+          </Sheet>
 
           <div className="flex items-center justify-between pt-4">
             <div className="flex gap-2">

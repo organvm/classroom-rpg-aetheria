@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Quest, Submission, Realm, Theme, THEME_CONFIGS } from '@/lib/types'
+import { Quest, Submission, Realm, Theme, THEME_CONFIGS, RealmExtended } from '@/lib/types'
 import {
   Trash,
   Eye,
@@ -16,7 +16,9 @@ import {
   Package,
   ChatText,
   Users,
-  Lightbulb
+  Lightbulb,
+  Gear,
+  FileText
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { formatTimeAgo } from '@/lib/game-utils'
@@ -25,7 +27,13 @@ import { RubricManager, type Rubric } from './RubricManager'
 import { CalendarView } from './CalendarView'
 import { GradingInterface } from './GradingInterface'
 import { ExportImportDialog } from './ExportImportDialog'
-import { FeedbackSnippetsManager, StudentSamplesList, FeedbackInsights } from './educator'
+import {
+  FeedbackSnippetsManager,
+  StudentSamplesList,
+  FeedbackInsights,
+  RealmSettingsModal,
+  ReportGenerationPanel
+} from './educator'
 import { useKV } from '@github/spark/hooks'
 import { motion } from 'framer-motion'
 
@@ -36,18 +44,20 @@ interface TeacherDashboardProps {
   theme: Theme
   onDeleteQuest: (questId: string) => void
   onDeleteRealm: (realmId: string) => void
+  onUpdateRealm?: (realm: RealmExtended) => void
   onUpdateSubmission?: (submission: Submission) => void
   onImportRealms?: (realms: Realm[]) => void
   onImportQuests?: (quests: Quest[]) => void
 }
 
-export function TeacherDashboard({ 
-  quests, 
-  submissions, 
-  realms, 
+export function TeacherDashboard({
+  quests,
+  submissions,
+  realms,
   theme,
   onDeleteQuest,
   onDeleteRealm,
+  onUpdateRealm,
   onUpdateSubmission,
   onImportRealms,
   onImportQuests
@@ -55,6 +65,7 @@ export function TeacherDashboard({
   const [selectedSubmissions, setSelectedSubmissions] = useState<string | null>(null)
   const [gradingSubmission, setGradingSubmission] = useState<Submission | null>(null)
   const [showExportImport, setShowExportImport] = useState(false)
+  const [settingsRealm, setSettingsRealm] = useState<RealmExtended | null>(null)
   const [rubrics, setRubrics] = useKV<Rubric[]>('aetheria-rubrics', [])
   
   const themeConfig = THEME_CONFIGS[theme]
@@ -187,6 +198,10 @@ export function TeacherDashboard({
             <Lightbulb size={18} weight="fill" />
             Insights
           </TabsTrigger>
+          <TabsTrigger value="reports" className="gap-2">
+            <FileText size={18} weight="fill" />
+            Reports
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-8">
@@ -229,7 +244,7 @@ export function TeacherDashboard({
                     >
                       <Card className="glass-panel p-6 hover:scale-105 transition-transform">
                         <div className="flex items-start gap-4">
-                          <div 
+                          <div
                             className="w-12 h-12 rounded-full flex-shrink-0 animate-pulse-glow"
                             style={{ backgroundColor: realm.color }}
                           />
@@ -242,14 +257,24 @@ export function TeacherDashboard({
                               {realmQuests.length} quests
                             </Badge>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDeleteRealm(realm.id)}
-                            className="flex-shrink-0"
-                          >
-                            <Trash size={18} className="text-destructive" />
-                          </Button>
+                          <div className="flex gap-1 flex-shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setSettingsRealm(realm as RealmExtended)}
+                              title="Settings"
+                            >
+                              <Gear size={18} />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteRealm(realm.id)}
+                              title="Delete"
+                            >
+                              <Trash size={18} className="text-destructive" />
+                            </Button>
+                          </div>
                         </div>
                       </Card>
                     </motion.div>
@@ -370,7 +395,29 @@ export function TeacherDashboard({
         <TabsContent value="insights">
           <FeedbackInsights theme={theme} />
         </TabsContent>
+
+        <TabsContent value="reports">
+          <ReportGenerationPanel
+            quests={quests}
+            submissions={submissions}
+            realms={realms}
+            theme={theme}
+          />
+        </TabsContent>
       </Tabs>
+
+      {/* Realm Settings Modal */}
+      <RealmSettingsModal
+        realm={settingsRealm}
+        open={!!settingsRealm}
+        onClose={() => setSettingsRealm(null)}
+        onSave={(updated) => {
+          onUpdateRealm?.(updated)
+          setSettingsRealm(null)
+        }}
+        theme={theme}
+        rubrics={rubrics || []}
+      />
 
       <Dialog open={!!selectedSubmissions} onOpenChange={() => setSelectedSubmissions(null)}>
         <DialogContent className="glass-panel max-w-4xl max-h-[80vh] overflow-y-auto">
