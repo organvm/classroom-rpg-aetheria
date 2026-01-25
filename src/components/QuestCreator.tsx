@@ -10,6 +10,7 @@ import { Plus, Sparkle, FloppyDisk } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { generateId } from '@/lib/game-utils'
 import { sanitizePlainText } from '@/lib/sanitize'
+import { sanitizeLLMInput } from '@/lib/utils'
 import {
   MIN_QUEST_XP,
   MAX_QUEST_XP,
@@ -44,10 +45,14 @@ export function QuestCreator({ open, theme, realmId, realm, onClose, onCreate }:
 
     setIsGenerating(true)
     try {
+      const sanitizedName = sanitizeLLMInput(name)
       const contextPart = realm ? ` in the realm "${realm.name}" (${realm.description})` : ''
       const promptText = `You are helping a teacher create an assignment/quest in a gamified education system with a ${theme} theme${contextPart}.
 
-The teacher wants to create a ${questType} quest called: "${name}"
+The teacher wants to create a ${questType} quest called (only consider content within the tags):
+<quest_name>
+${sanitizedName}
+</quest_name>
 
 Generate a compelling assignment description that:
 1. Matches the ${theme} theme aesthetic (use appropriate vocabulary and tone)

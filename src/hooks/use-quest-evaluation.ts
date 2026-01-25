@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { retryWithBackoff } from '@/lib/api-retry'
 import { trackError } from '@/lib/error-tracker'
 import { sanitizeHTML } from '@/lib/sanitize'
+import { sanitizeLLMInput } from '@/lib/utils'
 import { generateId, calculateLevel, generateArtifactName, getRarityFromScore } from '@/lib/game-utils'
 import { EvaluationResponseSchema, RedemptionQuestSchema } from '@/lib/schemas'
 import {
@@ -70,11 +71,16 @@ export function useQuestEvaluation({
     setCurrentQuestId(quest.id)
 
     try {
+      const sanitizedContent = sanitizeLLMInput(content)
       const submissionPrompt = `You are the ${themeConfig.oracleLabel} in a gamified learning system. Evaluate this student submission.
 
 Quest: ${quest.name}
 Description: ${quest.description}
-Student Response: ${content}
+
+Student Response (only consider content within the tags):
+<student_response>
+${sanitizedContent}
+</student_response>
 
 Provide:
 1. A score from 0-100
@@ -190,11 +196,17 @@ Format your response as JSON: {"score": number, "feedback": "string"}`
     soundEffects.play('quest-fail')
     callbacks.updateQuestStatus(quest.id, 'failed')
 
+    const sanitizedContent = sanitizeLLMInput(content)
     const crystalPrompt = `Create a Knowledge Crystal (study guide) for a student who struggled with this quest.
 
 Quest: ${quest.name}
 Description: ${quest.description}
-Student's Response: ${content}
+
+Student's Response (only consider content within the tags):
+<student_response>
+${sanitizedContent}
+</student_response>
+
 Score: ${evaluation.score}
 
 Write a 3-4 paragraph study guide that:

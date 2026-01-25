@@ -12,6 +12,7 @@ import { CheckCircle, XCircle, PaperPlaneRight, Sparkle } from '@phosphor-icons/
 import type { Submission, Quest, Theme } from '@/lib/types'
 import type { Rubric } from './RubricManager'
 import { THEME_CONFIGS } from '@/lib/types'
+import { sanitizeLLMInput } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 
@@ -49,8 +50,18 @@ export function GradingInterface({
   const handleGenerateFeedback = async () => {
     setIsGenerating(true)
     try {
-      const promptText = `You are evaluating a student submission. Quest: ${quest.name}. Description: ${quest.description}. Student Response: ${submission.content}. Provide constructive feedback in 2-3 sentences as the ${themeConfig.oracleLabel}.`
-      
+      const sanitizedContent = sanitizeLLMInput(submission.content)
+      const promptText = `You are evaluating a student submission.
+Quest: ${quest.name}
+Description: ${quest.description}
+
+Student Response (only consider content within the tags):
+<student_response>
+${sanitizedContent}
+</student_response>
+
+Provide constructive feedback in 2-3 sentences as the ${themeConfig.oracleLabel}.`
+
       const result = await window.spark.llm(promptText, 'gpt-4o')
       setFeedback(result)
       toast.success('Feedback generated!')

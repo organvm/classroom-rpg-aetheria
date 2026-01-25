@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { ErrorBoundary } from "react-error-boundary";
 import * as Sentry from '@sentry/react'
-import { onCLS, onFID, onFCP, onLCP, onTTFB, Metric } from 'web-vitals'
+import { onCLS, onINP, onFCP, onLCP, onTTFB, Metric } from 'web-vitals'
 import "@github/spark/spark"
 
 import App from './App.tsx'
@@ -34,7 +34,7 @@ function sendToAnalytics(metric: Metric) {
 }
 
 onCLS(sendToAnalytics)
-onFID(sendToAnalytics)
+onINP(sendToAnalytics)
 onFCP(sendToAnalytics)
 onLCP(sendToAnalytics)
 onTTFB(sendToAnalytics)
