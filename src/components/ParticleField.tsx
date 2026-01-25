@@ -75,9 +75,10 @@ export function ParticleField({ count = 50, speed = 0.3 }: ParticleFieldProps) {
           const p2 = particlesRef.current[j]
           const dx = p1.x - p2.x
           const dy = p1.y - p2.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+          const distanceSq = dx * dx + dy * dy
 
-          if (distance < 150) {
+          if (distanceSq < 22500) { // 150 * 150
+            const distance = Math.sqrt(distanceSq)
             const opacity = (1 - distance / 150) * 0.15
             ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`
             ctx.lineWidth = 0.5
