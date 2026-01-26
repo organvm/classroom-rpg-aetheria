@@ -18,7 +18,8 @@ import {
   Users,
   Lightbulb,
   Gear,
-  FileText
+  FileText,
+  Target
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { formatTimeAgo } from '@/lib/game-utils'
@@ -34,6 +35,11 @@ import {
   RealmSettingsModal,
   ReportGenerationPanel
 } from './educator'
+import { StandardsProgress } from './standards/StandardsProgress'
+import { StandardsReport } from './standards/StandardsReport'
+import { useStandards } from '@/hooks/use-standards'
+import { ALL_STANDARDS } from '@/lib/standards'
+import type { LearningStandardRef } from '@/lib/types'
 import { useKV } from '@github/spark/hooks'
 import { motion } from 'framer-motion'
 
@@ -67,8 +73,26 @@ export function TeacherDashboard({
   const [showExportImport, setShowExportImport] = useState(false)
   const [settingsRealm, setSettingsRealm] = useState<RealmExtended | null>(null)
   const [rubrics, setRubrics] = useKV<Rubric[]>('aetheria-rubrics', [])
-  
+  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null)
+
   const themeConfig = THEME_CONFIGS[theme]
+
+  // Standards tracking
+  const { masteryRecords, getMasteryByStudent } = useStandards()
+
+  // Convert standards to LearningStandardRef format
+  const standardsRef: LearningStandardRef[] = ALL_STANDARDS.map(s => ({
+    id: s.id,
+    framework: s.framework,
+    code: s.code,
+    description: s.description,
+    gradeLevel: s.gradeLevel,
+    category: s.category,
+    strand: s.strand
+  }))
+
+  // Get unique student IDs from submissions
+  const studentIds = [...new Set(submissions.map(s => s.studentId))]
 
   const questSubmissions = submissions.filter(s => s.questId === selectedSubmissions)
   const selectedQuest = quests.find(q => q.id === selectedSubmissions)
@@ -201,6 +225,10 @@ export function TeacherDashboard({
           <TabsTrigger value="reports" className="gap-2">
             <FileText size={18} weight="fill" />
             Reports
+          </TabsTrigger>
+          <TabsTrigger value="standards" className="gap-2">
+            <Target size={18} weight="fill" />
+            Standards
           </TabsTrigger>
         </TabsList>
 
@@ -403,6 +431,77 @@ export function TeacherDashboard({
             realms={realms}
             theme={theme}
           />
+        </TabsContent>
+
+        <TabsContent value="standards" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold">Standards Tracking</h2>
+              <p className="text-muted-foreground">
+                Track student progress against learning standards
+              </p>
+            </div>
+            {studentIds.length > 0 && (
+              <select
+                value={selectedStudentId || ''}
+                onChange={(e) => setSelectedStudentId(e.target.value || null)}
+                className="px-3 py-2 rounded-md border bg-background"
+              >
+                <option value="">Select a student...</option>
+                {studentIds.map(id => (
+                  <option key={id} value={id}>
+                    {id.slice(0, 8)}...
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          {selectedStudentId ? (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <StandardsProgress
+                studentName={`Student ${selectedStudentId.slice(0, 8)}`}
+                masteryRecords={getMasteryByStudent(selectedStudentId)}
+                standards={standardsRef}
+              />
+              <StandardsReport
+                studentName={`Student ${selectedStudentId.slice(0, 8)}`}
+                studentId={selectedStudentId}
+                masteryRecords={getMasteryByStudent(selectedStudentId)}
+                standards={standardsRef}
+                onExport={(format) => {
+                  // Export functionality
+                  const data = getMasteryByStudent(selectedStudentId)
+                  const blob = new Blob(
+                    [format === 'json' ? JSON.stringify(data, null, 2) :
+                      'Standard ID,Level,Last Assessed\n' +
+                      data.map(d => `${d.standardId},${d.level},${d.lastAssessed}`).join('\n')],
+                    { type: format === 'json' ? 'application/json' : 'text/csv' }
+                  )
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement('a')
+                  a.href = url
+                  a.download = `standards-${selectedStudentId.slice(0, 8)}.${format}`
+                  a.click()
+                  URL.revokeObjectURL(url)
+                }}
+                onPrint={() => window.print()}
+              />
+            </div>
+          ) : (
+            <Card className="glass-panel p-12 text-center">
+              <Target size={48} className="mx-auto mb-4 text-muted-foreground opacity-50" />
+              <h3 className="text-lg font-medium mb-2">Select a Student</h3>
+              <p className="text-muted-foreground">
+                Choose a student from the dropdown above to view their standards progress.
+              </p>
+              {studentIds.length === 0 && (
+                <p className="text-sm text-muted-foreground mt-4">
+                  No students have submitted work yet.
+                </p>
+              )}
+            </Card>
+          )}
         </TabsContent>
       </Tabs>
 

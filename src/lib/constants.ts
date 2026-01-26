@@ -28,6 +28,7 @@ export const DEFAULT_QUEST_XP = 100
 // LLM retry configuration
 export const LLM_MAX_RETRIES = 3
 export const LLM_RETRY_DELAY_MS = 2000
+export const LLM_TIMEOUT_MS = 30000 // 30 seconds max per LLM call
 
 // Input validation constraints
 export const NAME_MIN_LENGTH = 3

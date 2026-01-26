@@ -13,6 +13,7 @@ import { BoardGameMap } from '@/components/BoardGameMap'
 import { ConstellationView } from '@/components/ConstellationView'
 import { TeacherDashboard } from '@/components/TeacherDashboard'
 import { AnalyticsDashboard } from '@/components/AnalyticsDashboard'
+import { VotingView } from '@/components/VotingView'
 import { Error3DFallback, ErrorChartFallback } from '@/components/ErrorFallback'
 import type {
   Theme,
@@ -313,6 +314,25 @@ export const ViewRouter = memo(function ViewRouter({
               submissions={submissions}
               profiles={allProfiles}
               theme={theme}
+            />
+          </ErrorBoundary>
+        </motion.div>
+      )}
+
+      {currentView === 'voting' && (
+        <motion.div
+          key="voting"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ErrorBoundary FallbackComponent={DefaultErrorFallback}>
+            <VotingView
+              theme={theme}
+              role={role}
+              profileId={profile.id}
+              quests={quests}
             />
           </ErrorBoundary>
         </motion.div>

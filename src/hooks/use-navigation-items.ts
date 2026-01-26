@@ -6,7 +6,8 @@ import {
   Target,
   Trophy,
   ChalkboardTeacher,
-  ChartBar
+  ChartBar,
+  Handshake
 } from '@phosphor-icons/react'
 import type { Icon } from '@phosphor-icons/react'
 import { Theme, Role, THEME_CONFIGS } from '@/lib/types'
@@ -32,6 +33,7 @@ export function useNavigationItems(theme: Theme, role: Role): NavigationItem[] {
       { id: 'archives', label: themeConfig.archiveLabel, icon: BookOpen },
       { id: 'character', label: 'My Hero', icon: User },
       { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
+      { id: 'voting', label: 'Voting', icon: Handshake },
       { id: 'teacher-dashboard', label: 'Manage', icon: ChalkboardTeacher, teacherOnly: true },
       { id: 'analytics', label: 'Analytics', icon: ChartBar, teacherOnly: true },
     ]

@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { retryWithBackoff } from '@/lib/api-retry'
+import { retryWithBackoffAndTimeout } from '@/lib/api-retry'
 import { trackError } from '@/lib/error-tracker'
 import { sanitizeHTML } from '@/lib/sanitize'
 import { sanitizeLLMInput } from '@/lib/utils'
@@ -11,7 +11,8 @@ import {
   ARTIFACT_THRESHOLD,
   REDEMPTION_XP_MULTIPLIER,
   LLM_MAX_RETRIES,
-  LLM_RETRY_DELAY_MS
+  LLM_RETRY_DELAY_MS,
+  LLM_TIMEOUT_MS
 } from '@/lib/constants'
 import { soundEffects } from '@/lib/sound-effects'
 import type { Quest, Submission, KnowledgeCrystal, Artifact, ThemeConfig, UserProfile, Theme } from '@/lib/types'
@@ -88,10 +89,11 @@ Provide:
 
 Format your response as JSON: {"score": number, "feedback": "string"}`
 
-      const result = await retryWithBackoff(
+      const result = await retryWithBackoffAndTimeout(
         () => window.spark.llm(submissionPrompt, 'gpt-4o', true),
         LLM_MAX_RETRIES,
-        LLM_RETRY_DELAY_MS
+        LLM_RETRY_DELAY_MS,
+        LLM_TIMEOUT_MS
       )
 
       let parsedResult: unknown
@@ -216,10 +218,11 @@ Write a 3-4 paragraph study guide that:
 
 Keep the tone matching the ${themeConfig.oracleLabel} character.`
 
-    const crystalContent = await retryWithBackoff(
+    const crystalContent = await retryWithBackoffAndTimeout(
       () => window.spark.llm(crystalPrompt, 'gpt-4o'),
       LLM_MAX_RETRIES,
-      LLM_RETRY_DELAY_MS
+      LLM_RETRY_DELAY_MS,
+      LLM_TIMEOUT_MS
     )
 
     const sanitizedCrystalContent = sanitizeHTML(crystalContent)
@@ -244,10 +247,11 @@ Description: ${quest.description}
 Create a simpler version that focuses on the core concept. Make it achievable for a struggling student.
 Just provide the quest name and description as JSON: {"name": "string", "description": "string"}`
 
-    const redemptionResult = await retryWithBackoff(
+    const redemptionResult = await retryWithBackoffAndTimeout(
       () => window.spark.llm(redemptionPrompt, 'gpt-4o', true),
       LLM_MAX_RETRIES,
-      LLM_RETRY_DELAY_MS
+      LLM_RETRY_DELAY_MS,
+      LLM_TIMEOUT_MS
     )
 
     let parsedRedemption: unknown

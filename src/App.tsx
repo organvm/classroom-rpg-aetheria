@@ -156,7 +156,7 @@ function AppContent() {
   )
 
   // Touch swipe navigation
-  const viewOrder = ['world-map', 'quests', 'archives', 'character', 'leaderboard']
+  const viewOrder = ['world-map', 'quests', 'archives', 'character', 'leaderboard', 'voting']
   useTouchSwipe(mainRef.current, {
     onSwipeLeft: () => {
       if (!isMobile) return

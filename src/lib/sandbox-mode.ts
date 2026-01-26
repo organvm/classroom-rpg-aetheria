@@ -238,7 +238,7 @@ export function getDemoProfile(): UserProfile {
         description: 'A mystical compass that guides new adventurers through their first quests.',
         rarity: 'common',
         questId: 'quest-demo-1',
-        earnedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString() // 1 day ago
+        earnedAt: Date.now() - 24 * 60 * 60 * 1000 // 1 day ago
       }
     ],
     avatar: DEFAULT_AVATAR
@@ -255,11 +255,11 @@ export function getDemoSubmissions(): Submission[] {
       questId: 'quest-demo-1',
       studentId: 'demo-user-1',
       content: 'Solutions:\n1. x = 2 or x = 3\n2. slope = 2\n3. area ≈ 78.54 square units',
-      submittedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      submittedAt: Date.now() - 24 * 60 * 60 * 1000,
       status: 'evaluated',
       score: 95,
       feedback: 'Excellent work! All solutions are correct and well-explained.',
-      evaluatedAt: new Date(Date.now() - 23 * 60 * 60 * 1000).toISOString()
+      evaluatedAt: Date.now() - 23 * 60 * 60 * 1000
     }
   ]
 }
@@ -274,7 +274,7 @@ export function getDemoCrystals(): KnowledgeCrystal[] {
       title: 'Quadratic Mastery',
       content: 'You have mastered the art of solving quadratic equations! Remember: use the quadratic formula x = (-b ± √(b²-4ac)) / 2a',
       questId: 'quest-demo-1',
-      createdAt: new Date(Date.now() - 23 * 60 * 60 * 1000).toISOString(),
+      createdAt: Date.now() - 23 * 60 * 60 * 1000,
       rarity: 'rare'
     }
   ]

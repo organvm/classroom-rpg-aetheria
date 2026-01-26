@@ -17,9 +17,15 @@ describe('useNavigationItems', () => {
       expect(ids).not.toContain('analytics')
     })
 
-    it('should return 5 items for students', () => {
+    it('should return 6 items for students', () => {
       const { result } = renderHook(() => useNavigationItems('fantasy', 'student'))
-      expect(result.current.length).toBe(5)
+      expect(result.current.length).toBe(6)
+    })
+
+    it('should include voting for students', () => {
+      const { result } = renderHook(() => useNavigationItems('fantasy', 'student'))
+      const ids = result.current.map(item => item.id)
+      expect(ids).toContain('voting')
     })
   })
 
@@ -32,9 +38,9 @@ describe('useNavigationItems', () => {
       expect(ids).toContain('analytics')
     })
 
-    it('should return 7 items for teachers', () => {
+    it('should return 8 items for teachers', () => {
       const { result } = renderHook(() => useNavigationItems('fantasy', 'teacher'))
-      expect(result.current.length).toBe(7)
+      expect(result.current.length).toBe(8)
     })
   })
 

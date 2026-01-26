@@ -85,6 +85,8 @@ export interface Quest {
   createdAt: number
 }
 
+export type SubmissionStatus = 'pending' | 'evaluated' | 'resubmitted'
+
 export interface Submission {
   id: string
   questId: string
@@ -95,6 +97,7 @@ export interface Submission {
   submittedAt: number
   evaluatedAt?: number
   rubricScores?: Record<string, number>
+  status?: SubmissionStatus
 }
 
 export interface KnowledgeCrystal {
