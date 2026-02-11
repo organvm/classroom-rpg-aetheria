@@ -5,6 +5,14 @@
 
 # Classroom RPG: Aetheria
 
+[![CI](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria/actions/workflows/ci.yml/badge.svg)](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria/blob/main/LICENSE)
+[![Organ III](https://img.shields.io/badge/Organ-III%20Ergon-F59E0B)](https://github.com/organvm-iii-ergon)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria)
+[![TypeScript](https://img.shields.io/badge/lang-TypeScript-informational)](https://github.com/organvm-iii-ergon/classroom-rpg-aetheria)
+
+
 **A gamified education platform that transforms classroom learning into immersive role-playing experiences, mapping curriculum objectives to quest mechanics, XP progression, and AI-powered evaluation.**
 
 Aetheria addresses the 40% dropout rate observed across online learning platforms by applying game-design psychology to structured education. Students do not simply complete assignments — they embark on quests within themed realms, earn artifacts graded by rarity, accumulate experience points that unlock progression tiers, and receive AI-generated feedback calibrated to curriculum standards. Teachers operate as Game Masters with full analytics dashboards, rubric management, and standards-alignment tracking across CCSS ELA and AP Literature frameworks.
