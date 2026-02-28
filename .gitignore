@@ -129,3 +129,6 @@ pids/
 .history/
 *.bak
 *.orig
+
+# Netlify
+.netlify
