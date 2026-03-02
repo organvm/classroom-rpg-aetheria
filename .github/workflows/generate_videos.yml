@@ -94,7 +94,7 @@ jobs:
           find video_output/ -type f -o -type d | sort
       
       - name: Upload video artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: portfolio-videos-${{ github.sha }}
@@ -106,7 +106,7 @@ jobs:
           if-no-files-found: warn
       
       - name: Upload intermediate assets
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: video-assets-${{ github.sha }}
