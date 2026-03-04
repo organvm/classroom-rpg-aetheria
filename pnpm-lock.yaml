@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@github/spark':
-        specifier: ^0.44.15
-        version: 0.44.19(react@19.2.4)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1))
+        specifier: ^0.45.2
+        version: 0.45.2(react@19.2.4)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1))
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.2.4)
@@ -847,8 +847,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@github/spark@0.44.19':
-    resolution: {integrity: sha512-kBqLPPrRSfv6/qpgN6kQczuFOYCgSLygRLQzXoiJ4Go5A/2JiErv3kTdmfAY16gWDAJDLSlvTkigCsDF4fYNJQ==}
+  '@github/spark@0.45.2':
+    resolution: {integrity: sha512-ofa1hdUelzBy/Cjj3FMQHvkghvwUHkx0HDmY9hcHt3KHmrgTP49hs3iXbMF0DApgRI6/AaGJXuYaxkkI6od6lw==}
     peerDependencies:
       react: ^19.0.0
       vite: ^7.0.0 || ^6.4.1
@@ -4801,7 +4801,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@github/spark@0.44.19(react@19.2.4)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1))':
+  '@github/spark@0.45.2(react@19.2.4)(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
       body-parser: 1.20.4
       express: 5.2.1
