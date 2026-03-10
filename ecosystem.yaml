@@ -1,0 +1,11 @@
+schema_version: '1.0'
+repo: classroom-rpg-aetheria
+organ: III
+display_name: Educational RPG system for classroom engagement
+delivery:
+- platform: web_app
+  status: not_started
+revenue:
+- platform: subscription
+  status: planned
+  priority: critical
