@@ -1,11 +1,59 @@
 schema_version: '1.0'
 repo: classroom-rpg-aetheria
 organ: III
-display_name: Educational RPG system for classroom engagement
+display_name: "Aetheria — Educational RPG system for classroom engagement"
+
 delivery:
 - platform: web_app
-  status: not_started
-revenue:
-- platform: subscription
-  status: planned
+  status: live
   priority: critical
+  notes: "Deployed at classroom-rpg-aetheria.netlify.app"
+  next_action: "Monitor uptime and collect teacher feedback"
+
+revenue:
+- platform: freemium
+  status: planned
+  priority: high
+  notes: "Free tier for individual teachers, paid for schools/districts"
+  next_action: "Design tier structure and feature gating"
+
+marketing:
+- platform: seo
+  status: not_started
+  priority: medium
+  notes: "Gamification, classroom engagement, educational RPG keywords"
+  next_action: "Add meta tags and structured data to landing page"
+- platform: content_marketing
+  status: not_started
+  priority: medium
+  notes: "Teacher blog posts, case studies, lesson plan integration guides"
+  next_action: "Draft introductory post on gamified learning"
+- platform: social_organic
+  status: not_started
+  priority: low
+  notes: "Twitter/X education community, teacher forums"
+  next_action: "Activate social presence via kerygma profile"
+
+community:
+- platform: discord
+  status: not_started
+  priority: medium
+  notes: "Teacher community for sharing quests, feedback, and strategies"
+  next_action: "Create Discord after initial teacher onboarding"
+
+content:
+- platform: docs_site
+  status: not_started
+  priority: high
+  next_action: "Create getting-started guide for teachers"
+- platform: blog
+  status: not_started
+  priority: medium
+  next_action: "Launch blog with gamified learning content"
+
+listings:
+- platform: product_hunt
+  status: planned
+  priority: medium
+  target_date: "2026-Q4"
+  next_action: "Prepare launch after revenue model validated"
