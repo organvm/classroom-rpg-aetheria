@@ -4,15 +4,14 @@
 repos:
   # General file checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
       # File format checks
       - id: check-yaml
-        args: ['--safe']
       - id: check-json
       - id: check-toml
       - id: check-xml
-      
+
       # Git checks
       - id: check-added-large-files
         args: ['--maxkb=1000']
@@ -20,7 +19,7 @@ repos:
       - id: check-merge-conflict
       - id: check-vcs-permalinks
       - id: forbid-new-submodules
-      
+
       # File content checks
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
@@ -30,7 +29,7 @@ repos:
         args: ['--markdown-linebreak-ext=md']
       - id: mixed-line-ending
         args: ['--fix=lf']
-      
+
       # Python checks
       - id: check-ast
       - id: check-builtin-literals
@@ -41,7 +40,7 @@ repos:
 
   # Markdown formatting
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.39.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint
         args: ['--fix']
@@ -90,7 +89,7 @@ repos:
 # Configuration for specific hooks
 default_language_version:
   python: python3.11
-  node: "18"
+  node: "20"
 
 # Files to exclude from all hooks
 exclude: |
