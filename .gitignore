@@ -132,3 +132,4 @@ pids/
 
 # Netlify
 .netlify
+.lh/
