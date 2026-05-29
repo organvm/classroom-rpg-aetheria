@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/sheet'
 import { CheckCircle, XCircle, PaperPlaneRight, Sparkle, ChatText } from '@phosphor-icons/react'
 import type { Submission, Quest, Theme } from '@/lib/types'
-import type { Rubric } from './RubricManager'
+import type { Rubric } from '@/components/grading/RubricManager'
 import { THEME_CONFIGS } from '@/lib/types'
 import { sanitizeLLMInput } from '@/lib/utils'
 import { motion } from 'framer-motion'

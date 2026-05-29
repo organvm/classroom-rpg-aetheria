@@ -43,7 +43,7 @@ import { toast } from 'sonner'
 import { SyllabusManager } from './SyllabusManager'
 import { GradingScaleEditor } from './GradingScaleEditor'
 import type { Realm, RealmExtended, GradeLevel, Theme, THEME_CONFIGS } from '@/lib/types'
-import type { Rubric } from '@/components/RubricManager'
+import type { Rubric } from '@/components/grading/RubricManager'
 
 interface RealmSettingsModalProps {
   realm: RealmExtended | null
