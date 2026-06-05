@@ -17,10 +17,10 @@ import {
 import { Theme, Role, THEME_CONFIGS } from '@/lib/types'
 import { UserProfile } from '@/lib/types'
 import { motion } from 'framer-motion'
-import { AvatarDisplay } from '@/components/AvatarDisplay'
+import { AvatarDisplay } from '@/components/avatar/AvatarDisplay'
 import { DEFAULT_AVATAR } from '@/lib/avatar-options'
-import { SoundSettings } from '@/components/SoundSettings'
-import { NotificationCenter } from '@/components/NotificationCenter'
+import { SoundSettings } from '@/components/settings/SoundSettings'
+import { NotificationCenter } from '@/components/feedback/NotificationCenter'
 import { useNavigationItems } from '@/hooks/use-navigation-items'
 import { usePlayerStats } from '@/hooks/use-player-stats'
 

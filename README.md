@@ -407,7 +407,7 @@ The internal nine-dimensional analysis identifies the following priority areas f
 - **API layer** — RESTful API for third-party integrations and data export
 - **Mobile native** — React Native companion app for push notifications and offline access
 
-See [TECHNICAL_ROADMAP.md](TECHNICAL_ROADMAP.md) for the detailed 30-day production hardening sprint plan.
+See [TECHNICAL_ROADMAP.md](./docs/TECHNICAL_ROADMAP.md) for the detailed 30-day production hardening sprint plan.
 
 ---
 

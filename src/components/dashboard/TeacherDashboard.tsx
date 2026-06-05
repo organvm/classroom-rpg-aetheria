@@ -24,19 +24,19 @@ import {
 import { toast } from 'sonner'
 import { formatTimeAgo } from '@/lib/game-utils'
 import { QUEST_PASS_THRESHOLD } from '@/lib/constants'
-import { RubricManager, type Rubric } from './RubricManager'
-import { CalendarView } from './CalendarView'
-import { GradingInterface } from './GradingInterface'
-import { ExportImportDialog } from './ExportImportDialog'
+import { RubricManager, type Rubric } from '@/components/grading/RubricManager'
+import { CalendarView } from '@/components/schedule/CalendarView'
+import { GradingInterface } from '@/components/grading/GradingInterface'
+import { ExportImportDialog } from '@/components/dialogs/ExportImportDialog'
 import {
   FeedbackSnippetsManager,
   StudentSamplesList,
   FeedbackInsights,
   RealmSettingsModal,
   ReportGenerationPanel
-} from './educator'
-import { StandardsProgress } from './standards/StandardsProgress'
-import { StandardsReport } from './standards/StandardsReport'
+} from '@/components/educator'
+import { StandardsProgress } from '@/components/standards/StandardsProgress'
+import { StandardsReport } from '@/components/standards/StandardsReport'
 import { useStandards } from '@/hooks/use-standards'
 import { ALL_STANDARDS } from '@/lib/standards'
 import type { LearningStandardRef } from '@/lib/types'

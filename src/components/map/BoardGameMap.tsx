@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { Quest, Theme } from '@/lib/types'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { MobileControlsHint } from './MobileControlsHint'
+import { MobileControlsHint } from '@/components/feedback/MobileControlsHint'
 
 interface BoardGameMapProps {
   quests: Quest[]

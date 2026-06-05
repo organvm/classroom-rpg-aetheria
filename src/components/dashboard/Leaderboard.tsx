@@ -5,10 +5,10 @@ import { Theme, THEME_CONFIGS, UserProfile, Role, Quest, Submission, Artifact } 
 import { Trophy, Medal, Star, Crown, Sparkle } from '@phosphor-icons/react'
 import { calculateLevel, getLevelTitle } from '@/lib/game-utils'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AvatarDisplay } from '@/components/AvatarDisplay'
+import { AvatarDisplay } from '@/components/avatar/AvatarDisplay'
 import { DEFAULT_AVATAR } from '@/lib/avatar-options'
-import { StudentDetailView } from '@/components/StudentDetailView'
-import { ArtifactDetailModal } from '@/components/ArtifactDetailModal'
+import { StudentDetailView } from '@/components/student/StudentDetailView'
+import { ArtifactDetailModal } from '@/components/dialogs/ArtifactDetailModal'
 import { useMotionConfig } from '@/hooks/use-reduced-motion'
 import { cn } from '@/lib/utils'
 
