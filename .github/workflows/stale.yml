@@ -24,7 +24,7 @@ jobs:
           # Issue settings
           stale-issue-message: |
             This issue has been automatically marked as stale because it has not had recent activity. 
-            It will be closed in 14 days if no further activity occurs. 
+            It will remain open — this label is informational only; this project never auto-closes. 
             
             If this issue is still relevant, please:
             - Comment on this issue to keep it open
@@ -43,14 +43,14 @@ jobs:
             Thank you for your understanding!
           
           days-before-issue-stale: 60
-          days-before-issue-close: 14
+          days-before-issue-close: -1
           stale-issue-label: 'stale'
           exempt-issue-labels: 'pinned,security,critical,in-progress'
           
           # PR settings
           stale-pr-message: |
             This pull request has been automatically marked as stale because it has not had recent activity.
-            It will be closed in 7 days if no further activity occurs.
+            It will remain open — this label is informational only; this project never auto-closes.
             
             If you're still working on this PR, please:
             - Comment on this PR to keep it open
@@ -69,7 +69,7 @@ jobs:
             Thank you for your understanding!
           
           days-before-pr-stale: 30
-          days-before-pr-close: 7
+          days-before-pr-close: -1
           stale-pr-label: 'stale'
           exempt-pr-labels: 'pinned,security,critical,in-review'
           
