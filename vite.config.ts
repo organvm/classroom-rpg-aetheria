@@ -10,6 +10,7 @@ const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.GITHUB_PAGES ? '/classroom-rpg-aetheria/' : '/',
   plugins: [
     react(),
     tailwindcss(),
@@ -38,5 +39,14 @@ export default defineConfig({
     alias: {
       '@': resolve(projectRoot, 'src')
     }
+  },
+  // Expose the Pages build flag so client code can skip unavailable backend calls.
+  define: {
+    __GITHUB_PAGES__: !!process.env.GITHUB_PAGES,
+  },
+  // Disable lightningcss CSS minification — Tailwind v4 generates
+  // @media (width >= (display-mode: standalone)) which lightningcss cannot parse.
+  build: {
+    cssMinify: false,
   },
 });
