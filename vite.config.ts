@@ -7,6 +7,20 @@ import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 import { resolve } from 'path'
 
 const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
+const isPages = !!process.env.GITHUB_PAGES
+
+// On the static GitHub Pages build there is no Spark runtime backend, so the
+// real `@github/spark/spark` side-effect (POST /_spark/loaded) and every
+// `useKV` call (GET /_spark/kv/*) would 404/405 on load — dozens of console
+// errors. Swap those two modules for network-free, localStorage-backed shims
+// at build time. Only active when GITHUB_PAGES is set; dev/normal builds are
+// untouched and keep the real Spark runtime.
+const sparkPagesAliases = isPages
+  ? {
+      '@github/spark/spark': resolve(projectRoot, 'src/lib/static-spark/spark.ts'),
+      '@github/spark/hooks': resolve(projectRoot, 'src/lib/static-spark/hooks.ts'),
+    }
+  : {}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -37,6 +51,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // Spark runtime/hooks shims for the static Pages build (see above).
+      ...sparkPagesAliases,
       '@': resolve(projectRoot, 'src')
     }
   },
